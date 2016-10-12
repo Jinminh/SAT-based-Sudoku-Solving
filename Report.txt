@@ -1,0 +1,169 @@
+For a 9x9 Sudoku, the comparison are as follows:
+
+time consumed using miniSAT:
+[root@v5197 jinminh]# ./minisat inputFile.txt outputFile.txt 
+==================================[MINISAT]===================================
+| Conflicts |     ORIGINAL     |              LEARNT              | Progress |
+|           | Clauses Literals |   Limit Clauses Literals  Lit/Cl |          |
+==============================================================================
+|         0 |    1342    23733 |     447       0        0     nan |  0.000 % |
+==============================================================================
+restarts              : 1
+conflicts             : 0              (0 /sec)
+decisions             : 1              (333 /sec)
+propagations          : 729            (243081 /sec)
+conflict literals     : 0              ( nan % deleted)
+Memory used           : 1.79 MB
+CPU time              : 0.002999 s
+
+SATISFIABLE
+
+time consumed using a non-miniSAT solver:
+SAT solver used: Satz2.1.3:
+[root@v5197 satz213]# time ./satz ../inputFile.txt 
+****the instance is satisfiable *****
+****verification of solution is OK****
+NB_MONO= 0, NB_UNIT= 0, NB_BRANCHE= 1, NB_BACK= 0 
+Program terminated in 0.000 seconds.
+satz214 ../inputFile.txt 0.000 1 0 0 0 1 729 12024 -12024 0 0
+
+real	0m0.031s
+user	0m0.026s
+sys	0m0.004s
+
+
+time consumed using a special purpose Sudoku solver:
+[root@v5197 jinminh]# ./ourProgram.pl 
+|1|6|3|8|2|5|9|7|4|
+|2|7|8|9|4|1|3|6|5|
+|9|4|5|6|3|7|2|1|8|
+|4|5|6|7|8|2|1|3|9|
+|3|8|1|5|6|9|7|4|2|
+|7|9|2|3|1|4|8|5|6|
+|8|3|9|1|5|6|4|2|7|
+|6|1|4|2|7|8|5|9|3|
+|5|2|7|4|9|3|6|8|1|
+% 43,363 inferences, 0.005 CPU in 0.005 seconds (100% CPU, 8422990 Lips)
+
+
+
+Comparison of performance for:
+	1. Non-SAT approaches:
+		miniSAT is faster than Sudoku solver written in Prolog (code attached)
+	2. Different SAT solvers:
+		miniSAT is faster than Satz 2.1.3
+	3. Peter Norvig's special-purpose solver:
+		miniSAT is slower than Peter Norvig's special-purpose solver in general
+
+Exploring general, n x n-size puzzles:
+	We have explored and integrated n x n-size puzzle solving function.
+	Usage:
+		./sudokuNxN.py <N> <verticalBlockSize> <horizontalBlockSize>
+	As an example, for 16x16 puzzle with block size 4x4:
+		./sudokuNxN.py 16 4 4
+
+Note:
+	This program needs minisat installed.
+	It will call minisat automatically. If the call failed, please use the inputFile.txt as the input of the minisat solver. After the output from minisat is generated, please rename the output file to outputFile.txt, put it with the program and try again.
+
+Sample Problems For Testing:
+
+9 x 9 Problem:
+1,6,3,8,_,5,_,7,_
+_,_,8,_,4,_,_,6,5
+_,_,5,_,_,7,_,_,8
+4,5,_,_,8,2,_,3,9
+3,_,1,_,_,_,_,4,_
+7,_,_,_,_,_,_,_,_
+8,3,9,_,5,_,_,_,_
+6,_,4,2,_,_,5,9,_
+_,_,_,_,9,3,_,8,1
+
+16 x 16 Problem:
+_,6,_,_,_,_,_,8,11,_,_,15,14,_,_,16
+15,11,_,_,_,16,14,_,_,_,12,_,_,6,_,_
+13,_,9,12,_,_,_,_,3,16,14,_,15,11,10,_
+2,_,16,_,11,_,15,10,1,_,_,_,_,_,_,_
+_,15,11,10,_,_,16,2,13,8,9,12,_,_,_,_
+12,13,_,_,4,1,5,6,2,3,_,_,_,_,11,10
+5,_,6,1,12,_,9,_,15,11,10,7,16,_,_,3
+_,2,_,_,_,10,_,11,6,_,5,_,_,13,_,9
+10,7,15,11,16,_,_,_,12,13,_,_,_,_,_,6
+9,_,_,_,_,_,1,_,_,2,_,16,10,_,_,11
+1,_,4,6,9,13,_,_,7,_,11,_,3,16,_,_
+16,14,_,_,7,_,10,15,4,6,1,_,_,_,13,8
+11,10,_,15,_,_,_,16,9,12,13,_,_,1,5,4
+_,_,12,_,1,4,6,_,16,_,_,_,11,10,_,_
+_,_,5,_,8,12,13,_,10,_,_,11,2,_,_,14
+3,16,_,_,10,_,_,7,_,_,_,6,_,_,_,12
+
+Sample Output:
+
+[root@v5197 jinminh]# ./sudokuNxN.py 16 4 4
+
+Parameters provided, using specified setting:
+ Number: 16x16
+ Vertical Block Size: 4
+ HorizontalBlockSize: 4
+
+Please enter a Sudoku problem
+Use '_' to represent an unknown number, use ',' to separate each terms in a row: 
+
+_,6,_,_,_,_,_,8,11,_,_,15,14,_,_,16
+15,11,_,_,_,16,14,_,_,_,12,_,_,6,_,_
+13,_,9,12,_,_,_,_,3,16,14,_,15,11,10,_
+2,_,16,_,11,_,15,10,1,_,_,_,_,_,_,_
+_,15,11,10,_,_,16,2,13,8,9,12,_,_,_,_
+12,13,_,_,4,1,5,6,2,3,_,_,_,_,11,10
+5,_,6,1,12,_,9,_,15,11,10,7,16,_,_,3
+_,2,_,_,_,10,_,11,6,_,5,_,_,13,_,9
+10,7,15,11,16,_,_,_,12,13,_,_,_,_,_,6
+9,_,_,_,_,_,1,_,_,2,_,16,10,_,_,11
+1,_,4,6,9,13,_,_,7,_,11,_,3,16,_,_
+16,14,_,_,7,_,10,15,4,6,1,_,_,_,13,8
+11,10,_,15,_,_,_,16,9,12,13,_,_,1,5,4
+_,_,12,_,1,4,6,_,16,_,_,_,11,10,_,_
+_,_,5,_,8,12,13,_,10,_,_,11,2,_,_,14
+3,16,_,_,10,_,_,7,_,_,_,6,_,_,_,12
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:          4096                                         |
+|  Number of clauses:          131648                                         |
+|  Parse time:                   0.02 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.09 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 0              (0 /sec)
+decisions             : 8              (0.00 % random) (70 /sec)
+propagations          : 4091           (35579 /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 26.46 MB
+CPU time              : 0.114982 s
+
+SATISFIABLE
+
+The solution to the given sudoku problem is: 
+
+4 6 1 3 13 5 12 8 11 10 2 15 14 7 9 16 
+15 11 10 7 2 16 14 3 8 9 12 13 1 6 4 5 
+13 8 9 12 6 7 4 1 3 16 14 5 15 11 10 2 
+2 5 16 14 11 9 15 10 1 7 6 4 12 8 3 13 
+7 15 11 10 3 14 16 2 13 8 9 12 4 5 6 1 
+12 13 8 9 4 1 5 6 2 3 16 14 7 15 11 10 
+5 4 6 1 12 8 9 13 15 11 10 7 16 2 14 3 
+14 2 3 16 15 10 7 11 6 4 5 1 8 13 12 9 
+10 7 15 11 16 2 3 4 12 13 8 9 5 14 1 6 
+9 3 13 8 5 6 1 12 14 2 15 16 10 4 7 11 
+1 12 4 6 9 13 8 14 7 5 11 10 3 16 2 15 
+16 14 2 5 7 11 10 15 4 6 1 3 9 12 13 8 
+11 10 7 15 14 3 2 16 9 12 13 8 6 1 5 4 
+8 9 12 13 1 4 6 5 16 14 3 2 11 10 15 7 
+6 1 5 4 8 12 13 9 10 15 7 11 2 3 16 14 
+3 16 14 2 10 15 11 7 5 1 4 6 13 9 8 12 
