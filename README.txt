@@ -1,7 +1,3 @@
-Group Member:
-Jinmin Huang V00787639
-Zhengyu Zhang V00740028
-Bailiang Zhou V00772637
 
 Folder structure:
 -Project.zip
