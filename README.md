@@ -13,10 +13,10 @@ As an example, for 16x16 puzzle with block size 4x4:
 	./sudokuNxN.py 16 4 4
 
 ## Note:
-	This program needs minisat installed.
-	It will call minisat automatically. 
+	This program needs minisat installed.It will call minisat automatically. 
 	If the call failed, please use the inputFile.txt as the input of the minisat solver. 
-	After the output from minisat is generated, please rename the output file to outputFile.txt, put it with the program 	and try again.
+	After the output from minisat is generated, please rename the output file to outputFile.txt, 
+	put it with the program and try again.
 
 
 ## Sample Problem For Testing:
