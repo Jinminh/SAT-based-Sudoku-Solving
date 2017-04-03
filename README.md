@@ -1,5 +1,5 @@
 
-Folder structure:
+## Folder structure
 -Project.zip
 	|
 	./README.txt: this file
@@ -7,19 +7,19 @@ Folder structure:
 	./ourProgram.pl: Sudoku Solver in Prolog
 	./Report.txt: the report file
 
-Usage:
+## Usage
 	./sudokuNxN.py <N> <verticalBlockSize> <horizontalBlockSize>
 As an example, for 16x16 puzzle with block size 4x4:
 	./sudokuNxN.py 16 4 4
 
-Note:
+## Note:
 	This program needs minisat installed.
 	It will call minisat automatically. If the call failed, please use the inputFile.txt as the input of the minisat solver. After the output from minisat is generated, please rename the output file to outputFile.txt, put it with the program and try again.
 
 
-Sample Problem For Testing:
+## Sample Problem For Testing:
 
-9 x 9 Problem:
+### 9 x 9 Problem:
 1,6,3,8,_,5,_,7,_
 _,_,8,_,4,_,_,6,5
 _,_,5,_,_,7,_,_,8
@@ -30,7 +30,7 @@ _,_,5,_,_,7,_,_,8
 6,_,4,2,_,_,5,9,_
 _,_,_,_,9,3,_,8,1
 
-16x16 Problem:
+### 16x16 Problem:
 _,6,_,_,_,_,_,8,11,_,_,15,14,_,_,16
 15,11,_,_,_,16,14,_,_,_,12,_,_,6,_,_
 13,_,9,12,_,_,_,_,3,16,14,_,15,11,10,_
